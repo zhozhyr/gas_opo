@@ -1,0 +1,6 @@
+<form id="deleteForm" method="post" action="{% url 'delete_item' item.pk %}">
+    {% csrf_token %}
+    <p>Вы уверены, что хотите удалить эту запись?</p>
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-danger">Удалить</button>
+</form>

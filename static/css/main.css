@@ -1,10 +1,12 @@
+
 body {
     margin: 0;
     padding: 0;
-    font-family: "Arial", serif;
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
 }
 
 TABLE {
+    margin: 0;
     width: 300px; /* Ширина таблицы */
     border-collapse: collapse; /* Убираем двойные линии между ячейками */
     border: 2px solid white; /* Прячем рамку вокруг таблицы */
@@ -15,3 +17,234 @@ TD, TH {
     border: 1px solid #000000; /* Параметры рамки */
     text-align: left; /* Выравнивание по левому краю */
 }
+
+.coming {
+    background-color: rgb(253, 241, 172);
+}
+
+.coming:hover {
+    background-color: #fce669;
+}
+
+.expired {
+    background-color: #ffd3d3;
+}
+
+.expired:hover {
+    background-color: #ffafaf;
+}
+
+td:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Увеличиваем прозрачность текущего цвета */
+}
+
+tr:hover {
+    background-color: rgba(3, 13, 30, 0.1); /* Увеличиваем прозрачность текущего цвета */
+}
+
+.change {
+    background-color: white;
+}
+
+.change:hover {
+    background-color: white;
+}
+
+.filter-panel {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+}
+
+.filter-panel label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.filter-panel input[type="text"], .filter-panel select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-right: 10px;
+}
+
+.filter-panel .checkbox-label {
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    margin-right: 10px;
+}
+
+.filter-panel .checkbox-label input {
+    margin-right: 5px;
+}
+
+.filter-panel button[type="submit"], .filter-panel button[type="button"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.filter-panel button[type="submit"]:hover, .filter-panel button[type="button"]:hover {
+    background-color: #0056b3;
+}
+
+.filter-panel .search-container {
+    display: flex;
+    align-items: center;
+}
+
+.filter-panel .search-container input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.filter-panel .search-container button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.filter-panel .search-container button:hover {
+    background-color: #218838;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.change-buttons button {
+    margin: 5px 0;
+    padding: 10px 15px;
+    width: 100%;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    font-family: sans-serif;
+    text-decoration: none;
+    position: relative;
+    transition: all .35s;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.change-buttons button span {
+    position: relative;
+    z-index: 2;
+    color: #333;
+}
+
+.change-buttons button:hover {
+    color: #fff;
+}
+
+.change-buttons button:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: #bcd29d;
+    transition: all .35s;
+    z-index: 1;
+    border-radius: 2px;
+}
+
+
+.change-buttons button:hover:after {
+    width: 100%;
+}
+
+/* Стили для таблицы в модальном окне */
+.change_table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+}
+
+.change_table thead {
+    display: flex;
+    flex-direction: column;
+}
+
+.change_table tbody {
+    display: flex;
+    flex-direction: column;
+}
+
+.change_table thead tr {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.change_table tbody tr {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.change_table th {
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.change_table td {
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+

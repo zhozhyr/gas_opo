@@ -1,0 +1,20 @@
+<div class="filter-panel">
+    <form method="GET">
+        {% csrf_token %}
+        <label for="id_naimenovanie_strukturnogo_podrazdeleniya">Подразделение:</label>
+        {{ form.naimenovanie_strukturnogo_podrazdeleniya }}
+        <label class="checkbox-label">
+            {{ form.cb_onControl }}
+            На контроле
+        </label>
+        <button type="submit">Применить фильтр</button>
+    </form>
+    <form action="{% url 'export_to_excel' %}" method="get">
+        <button type="submit">Выгрузить в Excel</button>
+    </form>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Поиск по таблице...">
+        <button type="button" onclick="searchTable()">Искать</button>
+    </div>
+    <button type="button" onclick="window.location.href='{% url 'create_tu' %}'">Добавить ТУ</button>
+</div>

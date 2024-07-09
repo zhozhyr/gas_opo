@@ -6,164 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}GAZ_OPO{% endblock %}</title>
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    {#bootstrap#}
+{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">#}
+{#    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>#}
+{#    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>#}
+{#    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>#}
 </head>
 <body>
-<h1>Данные отчета</h1>
-<form method="GET">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Применить фильтр</button>
-</form>
-<form action="{% url 'export_to_excel' %}" method="get">
-    <button type="submit">Выгрузить в Excel</button>
-</form>
+
+{% include 'filter_panel.html' %}
+{% include 'data_table.html' %}
+{#{% include 'modals.html' %}#}
 
 
-<!-- Если есть данные в queryset, отобразить их -->
-{% if queryset %}
-    <h2>Результаты фильтрации:</h2>
-    <table border="1">
-        <thead>
-        <tr>
-            <th>Наименование структурного подразделения</th>
-            <th>Наименование типа ОПО</th>
-            <th>Регистрационный номер ОПО</th>
-            <th>Наименование класса опасности</th>
-            <th>Краткое наименование типа ОПО</th>
-            <th>Наименование ТУ</th>
-            <th>Наименование завода</th>
-            <th>ID структурного подразделения</th>
-            <th>ID типа ОПО</th>
-            <th>ID ОПО</th>
-            <th>Наименование типа ТУ</th>
-            <th>ID типа ТУ</th>
-            <th>ID вида ТУ</th>
-            <th>Наименование вида ТУ</th>
-            <th>ID ТУ</th>
-            <th>Регистрационный номер оборудования ТУ</th>
-            <th>Серийный номер ТУ</th>
-            <th>Государственный регистрационный номер</th>
-            <th>Заводской номер</th>
-            <th>Марка ТУ</th>
-            <th>Краткие технические характеристики ТУ</th>
-            <th>Регистрационный номер ГТТ</th>
-            <th>Номер ТУ по технологической схеме</th>
-            <th>Год изготовления</th>
-            <th>Нормативный срок эксплуатации, лет</th>
-            <th>Год ввода в эксплуатацию</th>
-            <th>Год окончания эксплуатации</th>
-            <th>Процент износа</th>
-{#            <th>Дата последнего ЭПБ</th>#}
-{#            <th>Дата следующего ЭПБ</th>#}
-{#            <th>Дата очередной проверки</th>#}
-{#            <th>Дата следующей проверки</th>#}
-            <th>Разрешенный срок эксплуатации</th>
-            <th>Наличие предохранительного устройства</th>
-            <th>Тип предохранительного устройства</th>
-            <th>Объем, м3</th>
-            <th>Объект давление, МПа</th>
-            <th>Ду, мм</th>
-            <th>Тип</th>
-            <th>Подтип</th>
-            <th>Грузоподъемность, т</th>
-            <th>Объем, т</th>
-            <th>Оборудование давление, МПа</th>
-            <th>Год модернизации</th>
-            <th>Проведенные мероприятия</th>
-            <th>Номер разрешения РТН</th>
-            <th>Номер заключения ЭПБ</th>
-            <th>Наличие паспорта ТУ</th>
-            <th>Информация ТУ (сведения ОПО)</th>
-            <th>Информация ТУ (РТН)</th>
-            <th>Наличие сертификата соответствия</th>
-            <th>Наличие сертификата РТН</th>
-            <th>Примечание</th>
-            <th>Тип сертификата</th>
-            <th>Номер сертификата</th>
-            <th>Срок действия сертификата</th>
-            <th>Кем выдан контрольный орган</th>
-            <th>Примечание 2</th>
-            <th>Примечание 3</th>
-{#            <th>Дата обновления</th>#}
-{#            <th>Логин обновившего</th>#}
-            <th>Срок окончания эксплуатации</th>
-            <th>isdel</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in queryset %}
-            <tr>
-                <td>{% if item.naimenovanie_strukturnogo_podrazdeleniya %}
-                    {{ item.naimenovanie_strukturnogo_podrazdeleniya }}{% endif %}</td>
-                <td>{% if item.naimenovanie_tipa_opo %}{{ item.naimenovanie_tipa_opo }}{% endif %}</td>
-                <td>{% if item.registracionniy_nomer_opo %}{{ item.registracionniy_nomer_opo }}{% endif %}</td>
-                <td>{% if item.naimenovanie_classa_opasnosti %}{{ item.naimenovanie_classa_opasnosti }}{% endif %}</td>
-                <td>{% if item.kratkoe_naimenovanie_tipa_opo %}{{ item.kratkoe_naimenovanie_tipa_opo }}{% endif %}</td>
-                <td>{% if item.naimenovanie_tu %}{{ item.naimenovanie_tu }}{% endif %}</td>
-                <td>{% if item.naimenovanie_zavoda %}{{ item.naimenovanie_zavoda }}{% endif %}</td>
-                <td>{% if item.id_strukturn_podrazd %}{{ item.id_strukturn_podrazd }}{% endif %}</td>
-                <td>{% if item.id_tipa_opo %}{{ item.id_tipa_opo }}{% endif %}</td>
-                <td>{% if item.id_opo %}{{ item.id_opo }}{% endif %}</td>
-                <td>{% if item.naimenovanie_tipa_tu %}{{ item.naimenovanie_tipa_tu }}{% endif %}</td>
-                <td>{% if item.id_type_tu %}{{ item.id_type_tu }}{% endif %}</td>
-                <td>{% if item.id_kind_tu %}{{ item.id_kind_tu }}{% endif %}</td>
-                <td>{% if item.naimenovanie_vida_tu %}{{ item.naimenovanie_vida_tu }}{% endif %}</td>
-                <td>{% if item.ID_TU %}{{ item.ID_TU }}{% endif %}</td>
-                <td>{% if item.registr_nomer_oborudovaniya_tu %}
-                    {{ item.registr_nomer_oborudovaniya_tu }}{% endif %}</td>
-                <td>{% if item.seriyniy_nomer_tu %}{{ item.seriyniy_nomer_tu }}{% endif %}</td>
-                <td>{% if item.gos_registracionniy_nomer %}{{ item.gos_registracionniy_nomer }}{% endif %}</td>
-                <td>{% if item.zavodskoy_nomer %}{{ item.zavodskoy_nomer }}{% endif %}</td>
-                <td>{% if item.marka_tu %}{{ item.marka_tu }}{% endif %}</td>
-                <td>{% if item.kratkie_tehn_haract_tu %}{{ item.kratkie_tehn_haract_tu }}{% endif %}</td>
-                <td>{% if item.registr_nomer_gtt %}{{ item.registr_nomer_gtt }}{% endif %}</td>
-                <td>{% if item.nomer_tu_po_tehn_sheme %}{{ item.nomer_tu_po_tehn_sheme }}{% endif %}</td>
-                <td>{% if item.god_izgotovleniya %}{{ item.god_izgotovleniya }}{% endif %}</td>
-                <td>{% if item.norm_srok_ekspluat_let %}{{ item.norm_srok_ekspluat_let }}{% endif %}</td>
-                <td>{% if item.god_vvoda_v_ekspluat %}{{ item.god_vvoda_v_ekspluat }}{% endif %}</td>
-                <td>{% if item.god_okonchaniya_ekspluat %}{{ item.god_okonchaniya_ekspluat }}{% endif %}</td>
-                <td>{% if item.procent_iznosa %}{{ item.procent_iznosa }}{% endif %}</td>
-{#                <td>{% if item.data_posl_epb %}{{ item.data_posl_epb }}{% endif %}</td>#}
-{#                <td>{% if item.data_sled_epb %}{{ item.data_sled_epb }}{% endif %}</td>#}
-{#                <td>{% if item.data_ocherednoy_proverki %}{{ item.data_ocherednoy_proverki }}{% endif %}</td>#}
-{#                <td>{% if item.data_sled_proverki %}{{ item.data_sled_proverki }}{% endif %}</td>#}
-                <td>{% if item.razresh_srok_ekspluat %}{{ item.razresh_srok_ekspluat }}{% endif %}</td>
-                <td>{% if item.nalichie_predohr_ustroystva %}{{ item.nalichie_predohr_ustroystva }}{% endif %}</td>
-                <td>{% if item.tip_predohr_ustr %}{{ item.tip_predohr_ustr }}{% endif %}</td>
-                <td>{% if item.obyom_m3 %}{{ item.obyom_m3 }}{% endif %}</td>
-                <td>{% if item.object_davlenie_mpa %}{{ item.object_davlenie_mpa }}{% endif %}</td>
-                <td>{% if item.dy_mm %}{{ item.dy_mm }}{% endif %}</td>
-                <td>{% if item.tip %}{{ item.tip }}{% endif %}</td>
-                <td>{% if item.podtip %}{{ item.podtip }}{% endif %}</td>
-                <td>{% if item.gruzopodyomnost_t %}{{ item.gruzopodyomnost_t }}{% endif %}</td>
-                <td>{% if item.obyom_t %}{{ item.obyom_t }}{% endif %}</td>
-                <td>{% if item.oborudovanie_davlenie_mpa %}{{ item.oborudovanie_davlenie_mpa }}{% endif %}</td>
-                <td>{% if item.god_modernizacii %}{{ item.god_modernizacii }}{% endif %}</td>
-                <td>{% if item.provedennie_meropriyatiya %}{{ item.provedennie_meropriyatiya }}{% endif %}</td>
-                <td>{% if item.nomer_razresheniya_rtn %}{{ item.nomer_razresheniya_rtn }}{% endif %}</td>
-                <td>{% if item.nomer_zaklyucheniya_epb %}{{ item.nomer_zaklyucheniya_epb }}{% endif %}</td>
-                <td>{% if item.nalichie_pasporta_tu %}{{ item.nalichie_pasporta_tu }}{% endif %}</td>
-                <td>{% if item.inf_tu_svedeniya_opo %}{{ item.inf_tu_svedeniya_opo }}{% endif %}</td>
-                <td>{% if item.inf_tu_rtn %}{{ item.inf_tu_rtn }}{% endif %}</td>
-                <td>{% if item.nalichie_sertificata_sootvetstviya %}
-                    {{ item.nalichie_sertificata_sootvetstviya }}{% endif %}</td>
-                <td>{% if item.nalichie_sertificata_rtn %}{{ item.nalichie_sertificata_rtn }}{% endif %}</td>
-                <td>{% if item.primechanie %}{{ item.primechanie }}{% endif %}</td>
-                <td>{% if item.certificate_type %}{{ item.certificate_type }}{% endif %}</td>
-                <td>{% if item.certificate_number %}{{ item.certificate_number }}{% endif %}</td>
-                <td>{% if item.certificate_expiration_date %}{{ item.certificate_expiration_date }}{% endif %}</td>
-                <td>{% if item.certificate_issued_by %}{{ item.certificate_issued_by }}{% endif %}</td>
-                <td>{% if item.cb_onControl %}{{ item.cb_onControl }}{% endif %}</td>
-                <td>{% if item.Primechanie2 %}{{ item.Primechanie2 }}{% endif %}</td>
-                <td>{% if item.Primechanie3 %}{{ item.Primechanie3 }}{% endif %}</td>
-{#                <td>{% if item.Date_upd %}{{ item.Date_upd }}{% endif %}</td>#}
-{#                <td>{% if item.Login_upd %}{{ item.Login_upd }}{% endif %}</td>#}
-                <td>{% if item.srok_okonch_ekpl %}{{ item.srok_okonch_ekpl }}{% endif %}</td>
-                <td>{% if item.isdel %}{{ item.isdel }}{% endif %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% endif %}
+{#<script src="{% static 'js/modal.js' %}"></script>#}
+<script src="{% static 'js/search.js' %}"></script>
+
 </body>
 </html>
