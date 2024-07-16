@@ -205,7 +205,7 @@ class Certificate(models.Model):
     issue_date = models.DateField(blank=True, null=True ,verbose_name="Issue Date")
     expiration_date = models.DateField(null=True, verbose_name="Expiration Date", blank=True)
     issued_by = models.CharField(max_length=500, verbose_name="Issued By", blank=True, null=True)
-    id_tu = models.BigIntegerField(verbose_name="ID TU")
+    id_tu = models.BigIntegerField(verbose_name="ID TU", blank=True, null=True)
     scan = models.BinaryField(null=True, verbose_name="Scan", blank=True)
 
     class Meta:
@@ -306,7 +306,7 @@ class TU(models.Model):
     inf_tu_rtn = models.CharField(max_length=200, null=True, blank=True)
     nalichie_sertificata_sootvetstviya = models.IntegerField(null=True, blank=True)
     nalichie_sertificata_rtn = models.IntegerField(null=True, blank=True)
-    primechanie = models.TextField(null=True, blank=True)
+    primechanie = models.CharField(null=True, blank=True)
     id_opo = models.BigIntegerField()
     id_classa_opasnosti = models.BigIntegerField(null=True, blank=True)
     id_zavod_izgotovitel = models.BigIntegerField(null=True, blank=True)
@@ -442,6 +442,7 @@ class Manufacturer(models.Model):
 
 
 class Report_view(models.Model):
+
     naimenovanie_strukturnogo_podrazdeleniya = models.CharField(max_length=255)
     naimenovanie_tipa_opo = models.CharField(max_length=255)
     registracionniy_nomer_opo = models.CharField(max_length=255)

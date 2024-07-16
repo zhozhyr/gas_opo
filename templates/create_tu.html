@@ -3,62 +3,300 @@
 <html>
 <head>
     <title>Добавить ТУ</title>
+    <link type="image/png" sizes="96x96" rel="icon" href="{% static 'img/icons8-инженер-96.png' %}">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        form {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; /* Две колонки на больших экранах */
-            gap: 10px; /* Промежуток между элементами */
-        }
-
-        form label {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        form input[type="text"],
-        form input[type="number"],
-        form textarea {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-
-        form button {
-            height: 50px;
-            width: 100px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 8px 15px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        @media screen and (max-width: 768px) {
-            form {
-                grid-template-columns: 1fr 1fr; /* Одна колонка на маленьких экранах */
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Добавить ТУ</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить</button>
-</form>
+<div class="container mt-5">
+    <h3>Добавить ТУ</h3>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#tab-basic">Основная информация</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tab-operation">Эксплуатация</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tab-characteristics">Характеристики</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tab-documentation">Документация</a>
+        </li>
+    </ul>
+    <form method="post">
+        {% csrf_token %}
+        <div class="tab-content">
+            <!-- Основная информация -->
+            <div id="tab-basic" class="tab-pane active">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>
+                            {{ form.naimenovanie_strukturnogo_podrazdeleniya.label_tag }}
+                            {{ form.naimenovanie_strukturnogo_podrazdeleniya }}
+                        </div>
+                        <div>
+                            {{ form.naimenovanie_tipa_opo.label_tag }}
+                            {{ form.naimenovanie_tipa_opo }}
+                        </div>
+                        <div>
+                            {{ form.registracionniy_nomer_opo.label_tag }}
+                            {{ form.registracionniy_nomer_opo }}
+                        </div>
+                        <div>
+                            {{ form.kratkoe_naimenovanie_tipa_opo.label_tag }}
+                            {{ form.kratkoe_naimenovanie_tipa_opo }}
+                        </div>
+                        <div>
+                            {{ form.registracionniy_nomer_tu.label_tag }}
+                            {{ form.registracionniy_nomer_tu }}
+                        </div>
+                        <div>
+                            {{ form.naimenovanie_tu.label_tag }}
+                            {{ form.naimenovanie_tu }}
+                        </div>
+                        <div>
+                            {{ form.id_naimenovanie_tu.label_tag }}
+                            {{ form.id_naimenovanie_tu }}
+                        </div>
+                        <div>
+                            {{ form.id_opo.label_tag }}
+                            {{ form.id_opo }}
+                        </div>
+                        <div>
+                            {{ form.id_tu.label_tag }}
+                            {{ form.id_tu }}
+                        </div>
+                        <div>
+                            {{ form.id_tip_tu.label_tag }}
+                            {{ form.id_tip_tu }}
+                        </div>
+                        <div>
+                            {{ form.id_vid_tu.label_tag }}
+                            {{ form.id_vid_tu }}
+                        </div>
+                        <div>
+                            {{ form.id_classa_opasnosti.label_tag }}
+                            {{ form.id_classa_opasnosti }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            {{ form.zavod_izgotovitel_txt.label_tag }}
+                            {{ form.zavod_izgotovitel_txt }}
+                        </div>
+                        <div>
+                            {{ form.zavodskoy_nomer.label_tag }}
+                            {{ form.zavodskoy_nomer }}
+                        </div>
+
+                        <div>
+                            {{ form.seriyniy_nomer_tu.label_tag }}
+                            {{ form.seriyniy_nomer_tu }}
+                        </div>
+                        <div>
+                            {{ form.gos_registracionniy_nomer.label_tag }}
+                            {{ form.gos_registracionniy_nomer }}
+                        </div>
+                        <div>
+                            {{ form.marka_tu.label_tag }}
+                            {{ form.marka_tu }}
+                        </div>
+                        <div>
+                            {{ form.kratkie_tehn_haract_tu.label_tag }}
+                            {{ form.kratkie_tehn_haract_tu }}
+                        </div>
+                        <div>
+                            {{ form.registr_nomer_gtt.label_tag }}
+                            {{ form.registr_nomer_gtt }}
+                        </div>
+                        <div>
+                            {{ form.nomer_tu_po_tehn_sheme.label_tag }}
+                            {{ form.nomer_tu_po_tehn_sheme }}
+                        </div>
+                        <div>
+                            {{ form.god_izgotovleniya.label_tag }}
+                            {{ form.god_izgotovleniya }}
+                        </div>
+                        <div>
+                            {{ form.primechanie.label_tag }}
+                            {{ form.primechanie }}
+                        </div>
+                        <div>
+                            {{ form.primechanie2.label_tag }}
+                            {{ form.primechanie2 }}
+                        </div>
+                        <div>
+                            {{ form.primechanie3.label_tag }}
+                            {{ form.primechanie3 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Эксплуатация -->
+            <div id="tab-operation" class="tab-pane">
+                <div>
+                    {{ form.norm_srok_ekspluat_let.label_tag }}
+                    {{ form.norm_srok_ekspluat_let }}
+                </div>
+                <div>
+                    {{ form.god_vvoda_v_ekspluat.label_tag }}
+                    {{ form.god_vvoda_v_ekspluat }}
+                </div>
+                <div>
+                    {{ form.god_okonchaniya_ekspluat.label_tag }}
+                    {{ form.god_okonchaniya_ekspluat }}
+                </div>
+                <div>
+                    {{ form.procent_iznosa.label_tag }}
+                    {{ form.procent_iznosa }}
+                </div>
+                <div>
+                    {{ form.data_posl_epb.label_tag }}
+                    {{ form.data_posl_epb }}
+                </div>
+                <div>
+                    {{ form.data_sled_epb.label_tag }}
+                    {{ form.data_sled_epb }}
+                </div>
+                <div>
+                    {{ form.data_ocherednoy_proverki.label_tag }}
+                    {{ form.data_ocherednoy_proverki }}
+                </div>
+                <div>
+                    {{ form.data_sled_proverki.label_tag }}
+                    {{ form.data_sled_proverki }}
+                </div>
+                <div>
+                    {{ form.razresh_srok_ekspluat.label_tag }}
+                    {{ form.razresh_srok_ekspluat }}
+                </div>
+            </div>
+            <!-- Характеристики -->
+            <div id="tab-characteristics" class="tab-pane">
+                <div>
+                    {{ form.nalichie_predohr_ustroystva.label_tag }}
+                    {{ form.nalichie_predohr_ustroystva }}
+                </div>
+                <div>
+                    {{ form.tip_predohr_ustr.label_tag }}
+                    {{ form.tip_predohr_ustr }}
+                </div>
+                <div class="left">
+                    <h5>Объекты использования, переработки, образования, хранения, транспортировки, уничтожения
+                        опасных
+                        веществ:</h5>
+                    <div>
+                        {{ form.obyom_m3.label_tag }}
+                        {{ form.obyom_m3 }}
+                    </div>
+                    <div>
+                        {{ form.object_davlenie_mpa.label_tag }}
+                        {{ form.object_davlenie_mpa }}
+                    </div>
+                    <div>
+                        {{ form.dy_mm.label_tag }}
+                        {{ form.dy_mm }}
+                    </div>
+                    <h5>Оборудование, работающее при избыточном давлении > 0,07 МПа или температуре > 115 оС:</h5>
+                    <div>
+                        {{ form.oborudovanie_davlenie_mpa.label_tag }}
+                        {{ form.oborudovanie_davlenie_mpa }}
+                    </div>
+                    <div>
+                        {{ form.obyom_t.label_tag }}
+                        {{ form.obyom_t }}
+                    </div>
+                </div>
+                <div class="right">
+                    <h5>Сведения о модернизации:</h5>
+                    <div>
+                        {{ form.god_modernizacii.label_tag }}
+                        {{ form.god_modernizacii }}
+                    </div>
+                    <div>
+                        {{ form.provedennie_meropriyatiya.label_tag }}
+                        {{ form.provedennie_meropriyatiya }}
+                    </div>
+                    <h5>Грузоподъемные сооружения:</h5>
+                    <div>
+                        {{ form.tip.label_tag }}
+                        {{ form.tip }}
+                    </div>
+                    <div>
+                        {{ form.podtip.label_tag }}
+                        {{ form.podtip }}
+                    </div>
+                    <div>
+                        {{ form.gruzopodyomnost_t.label_tag }}
+                        {{ form.gruzopodyomnost_t }}
+                    </div>
+                </div>
+            </div>
+            <!-- Документация -->
+            <div id="tab-documentation" class="tab-pane">
+                <div>
+                    {{ form.nomer_razresheniya_rtn.label_tag }}
+                    {{ form.nomer_razresheniya_rtn }}
+                </div>
+                <div>
+                    {{ form.nomer_zaklyucheniya_epb.label_tag }}
+                    {{ form.nomer_zaklyucheniya_epb }}
+                </div>
+                <div>
+                    {{ form.nalichie_pasporta_tu.label_tag }}
+                    {{ form.nalichie_pasporta_tu }}
+                </div>
+                <div>
+                    {{ form.inf_tu_svedeniya_opo.label_tag }}
+                    {{ form.inf_tu_svedeniya_opo }}
+                </div>
+                <div>
+                    {{ form.inf_tu_rtn.label_tag }}
+                    {{ form.inf_tu_rtn }}
+                </div>
+                <div>
+                    {{ form.nalichie_sertificata_sootvetstviya.label_tag }}
+                    {{ form.nalichie_sertificata_sootvetstviya }}
+                </div>
+                <div>
+                    {{ form.nalichie_sertificata_rtn.label_tag }}
+                    {{ form.nalichie_sertificata_rtn }}
+                </div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>
+                            {{ form.certificate_number.label_tag }}
+                        </th>
+                        <th>
+                            {{ form.certificate_type.label_tag }}
+                        </th>
+                        <th>
+                            {{ form.certificate_expiration_date.label_tag }}
+                        </th>
+                        <th>
+                            {{ form.issued_by.label_tag }}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <td>{{ form.certificate_number }}</td>
+                    <td>{{ form.certificate_type }}</td>
+                    <td>{{ form.certificate_expiration_date }}</td>
+                    <td>{{ form.issued_by }}</td>
+                    </tbody>
+                </table>
+            </div>
+
+                <button class="btn_del_ed" type="submit" style="margin-top: 75px">Сохранить</button>
+            </div>
+    </form>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

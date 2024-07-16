@@ -1,20 +1,211 @@
+{% load static %}
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-style/dist/xlsx-style.min.js"></script>
 <div class="filter-panel">
-    <form method="GET">
-        {% csrf_token %}
-        <label for="id_naimenovanie_strukturnogo_podrazdeleniya">Подразделение:</label>
-        {{ form.naimenovanie_strukturnogo_podrazdeleniya }}
-        <label class="checkbox-label">
-            {{ form.cb_onControl }}
-            На контроле
-        </label>
-        <button type="submit">Применить фильтр</button>
-    </form>
-    <form action="{% url 'export_to_excel' %}" method="get">
-        <button type="submit">Выгрузить в Excel</button>
-    </form>
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Поиск по таблице...">
-        <button type="button" onclick="searchTable()">Искать</button>
+    <div class="division">
+        <form method="GET">
+            {% csrf_token %}
+            <label for="id_naimenovanie_strukturnogo_podrazdeleniya">Подразделение:</label>
+            {{ form.naimenovanie_strukturnogo_podrazdeleniya }}
+            <label class="radio-label">
+                {{ form.cb_onControl }}
+                На контроле
+            </label>
+            <button type="submit">Показать</button>
+        </form>
     </div>
-    <button type="button" onclick="window.location.href='{% url 'create_tu' %}'">Добавить ТУ</button>
+    {#    <form action="{% url 'export_to_excel' %}" method="get">#}
+    {#        <button type="submit">Выгрузить в Excel</button>#}
+    {#    </form>#}
+
+    
+    
+    <button type="button" title="Добавить ТУ"
+            onclick="openCreateWindow('{% url 'create_tu' %}')">
+        <img src="{% static 'img/icons8-plus.svg' %}" alt="">
+    </button>
+    <button title="Выгрузить в Excel" onclick="exportTableToExcel('dataTable', 'exported_data.xlsx')"><img
+            src="{% static 'img/icons8-microsoft-excel-2019.svg' %}" alt=""></button>
+    <div class="custom-select">
+        <div class="select-selected"><img src="{% static 'img/icons8-color-switch.svg' %}" alt=""> <span>Выделение цветом</span>
+        </div>
+        <div class="select-items">
+            <div><span class="yellow">███</span> Срок эксплуатации истекает через 2 года</div>
+            <div><span class="red">███</span> Срок эксплуатации истекает (истек) в этом году</div>
+            <div><span class="grey">███</span> Срок эксплуатации истекает (истек) в этом году</div>
+        </div>
+    </div>
+    <div id="table-search-container"></div> <!-- Контейнер для поиска -->
+    
+    <button id="filterButton"><img src="{% static 'img/icons8-лупа.svg'%}" title="Кастомная фильтрация"></button>
+    
+    <div class="filter-panel-slide" id="filterPanel">
+        <button id="closeFilters" style="float: right;"><img src="{% static 'img/X.svg'%}" title="Закрыть"></button>
+        <h3>Фильтры</h3>
+        
+        <label for="column1">Столбец 1:</label>
+    <select id="column1">
+        <option value="0">Сист. код</option>
+        <option value="1">Структурное подразделение</option>
+        <option value="2">Наименование ОПО</option>
+        <option value="3">Регистрационный номер ОПО</option>
+        <option value="4">Класс опасности</option>
+        <option value="5">Сокращенное наименование ОПО</option>
+        <option value="6">Регистрационный (учетный) номер оборудования ТУ</option>
+        <option value="7">Наименование ТУ</option>
+        <option value="8">Серийный номер ТУ</option>
+        <option value="9">Государственный регистрационный знак</option>
+        <option value="10">Завод-изготовитель</option>
+        <option value="11">Заводской номер ТУ</option>
+        <option value="12">Наименование типа ТУ</option>
+        <option value="13">Наименование вида ТУ</option>
+        <option value="14">Марка ТУ</option>
+        <option value="15">Краткие технические характеристики ТУ</option>
+        <option value="16">Регистрационный (инвентарный) номер ГТТ</option>
+        <option value="17">Номер ТУ по технологической схеме</option>
+        <option value="18">Год изготовления</option>
+        <option value="19">Нормативный срок эксплуатации, лет</option>
+        <option value="20">Год ввода в эксплуатацию</option>
+        <option value="21">Год окончания эксплуатации</option>
+        <option value="22">Процент износа</option>
+        <option value="23">Дата проведения экспертизы промышленной безопасности</option>
+        <option value="24">Дата следующей экспертизы промышленной безопасности</option>
+        <option value="25">Дата очередной проверки (технического освидетельствования)</option>
+        <option value="26">Дата следующей проверки (технического освидетельствования)</option>
+        <option value="27">Разрешенный срок эксплуатации</option>
+        <option value="28">Наличие предохранительного устройства</option>
+        <option value="29">Тип предохранительного устройства</option>
+        <option value="30">Объем, м<sup>3</sup></option>
+        <option value="31">Давление, МПа</option>
+        <option value="32">Dy, мм</option>
+        <option value="33">Тип</option>
+        <option value="34">Подтип</option>
+        <option value="35">Грузоподъемность, т</option>
+        <option value="36">Объем, т</option>
+        <option value="37">Давление оборудования, МПа</option>
+        <option value="38">Год модернизации</option>
+        <option value="39">Проведенные мероприятия</option>
+        <option value="40">Тип сертификата</option>
+        <option value="41">Номер сертификата</option>
+        <option value="42">Дата сертификата</option>
+        <option value="43">Кем выдан сертификат</option>
+        <option value="44">Номер разрешения РТН</option>
+        <option value="45">Номер заключения ЭПБ</option>
+        <option value="46">Наличие паспорта ТУ (есть/нет)</option>
+        <option value="47">Информация о включении ТУ в Сведения, характеризующие ОПО</option>
+        <option value="48">Информация о включении ТУ в отчет РТН</option>
+        <option value="49">Наличие сертификата (декларации) соответствия</option>
+        <option value="50">Наличие разрешения РТН на применение</option>
+        <option value="51">Примечание</option>
+        <option value="52">Примечание 2</option>
+        <option value="53">Примечание 3</option>
+        <option value="54">Дата изменения</option>
+        <option value="55">Внес изменения</option>
+        <option value="56">Срок окончания эксплуатации</option>
+        <option value="57">Выведено из эксплуатации</option>
+    </select>
+        
+        <label for="operator1">Оператор 1:</label>
+        <select id="operator1">
+            <option value="=">=</option>
+            <option value=">">></option>
+            <option value="<"><</option>
+            <option value="includes">Включает</option>
+        </select>
+        
+        <input type="text" id="value1" placeholder="Значение 1">
+
+        <label for="logic">Логика:</label>
+        <select id="logic">
+            <option value="and">И</option>
+            <option value="or">ИЛИ</option>
+        </select>
+
+        <label for="column2">Столбец 2:</label>
+    <select id="column2">
+        <option value="0">Сист. код</option>
+        <option value="1">Структурное подразделение</option>
+        <option value="2">Наименование ОПО</option>
+        <option value="3">Регистрационный номер ОПО</option>
+        <option value="4">Класс опасности</option>
+        <option value="5">Сокращенное наименование ОПО</option>
+        <option value="6">Регистрационный (учетный) номер оборудования ТУ</option>
+        <option value="7">Наименование ТУ</option>
+        <option value="8">Серийный номер ТУ</option>
+        <option value="9">Государственный регистрационный знак</option>
+        <option value="10">Завод-изготовитель</option>
+        <option value="11">Заводской номер ТУ</option>
+        <option value="12">Наименование типа ТУ</option>
+        <option value="13">Наименование вида ТУ</option>
+        <option value="14">Марка ТУ</option>
+        <option value="15">Краткие технические характеристики ТУ</option>
+        <option value="16">Регистрационный (инвентарный) номер ГТТ</option>
+        <option value="17">Номер ТУ по технологической схеме</option>
+        <option value="18">Год изготовления</option>
+        <option value="19">Нормативный срок эксплуатации, лет</option>
+        <option value="20">Год ввода в эксплуатацию</option>
+        <option value="21">Год окончания эксплуатации</option>
+        <option value="22">Процент износа</option>
+        <option value="23">Дата проведения экспертизы промышленной безопасности</option>
+        <option value="24">Дата следующей экспертизы промышленной безопасности</option>
+        <option value="25">Дата очередной проверки (технического освидетельствования)</option>
+        <option value="26">Дата следующей проверки (технического освидетельствования)</option>
+        <option value="27">Разрешенный срок эксплуатации</option>
+        <option value="28">Наличие предохранительного устройства</option>
+        <option value="29">Тип предохранительного устройства</option>
+        <option value="30">Объем, м<sup>3</sup></option>
+        <option value="31">Давление, МПа</option>
+        <option value="32">Dy, мм</option>
+        <option value="33">Тип</option>
+        <option value="34">Подтип</option>
+        <option value="35">Грузоподъемность, т</option>
+        <option value="36">Объем, т</option>
+        <option value="37">Давление оборудования, МПа</option>
+        <option value="38">Год модернизации</option>
+        <option value="39">Проведенные мероприятия</option>
+        <option value="40">Тип сертификата</option>
+        <option value="41">Номер сертификата</option>
+        <option value="42">Дата сертификата</option>
+        <option value="43">Кем выдан сертификат</option>
+        <option value="44">Номер разрешения РТН</option>
+        <option value="45">Номер заключения ЭПБ</option>
+        <option value="46">Наличие паспорта ТУ (есть/нет)</option>
+        <option value="47">Информация о включении ТУ в Сведения, характеризующие ОПО</option>
+        <option value="48">Информация о включении ТУ в отчет РТН</option>
+        <option value="49">Наличие сертификата (декларации) соответствия</option>
+        <option value="50">Наличие разрешения РТН на применение</option>
+        <option value="51">Примечание</option>
+        <option value="52">Примечание 2</option>
+        <option value="53">Примечание 3</option>
+        <option value="54">Дата изменения</option>
+        <option value="55">Внес изменения</option>
+        <option value="56">Срок окончания эксплуатации</option>
+        <option value="57">Выведено из эксплуатации</option>
+    </select>
+        
+        <label for="operator2">Оператор 2:</label>
+        <select id="operator2">
+            <option value="=">=</option>
+            <option value=">">></option>
+            <option value="<"><</option>
+            <option value="includes">Включает</option>
+        </select>
+        
+        <input type="text" id="value2" placeholder="Значение 2">
+        
+        <button id="applyFilters">Применить фильтры</button>
+    </div>
+
 </div>
+<script>
+    document.querySelector('.select-selected').addEventListener('click', function () {
+        this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', function (e) {
+        const select = document.querySelector('.custom-select');
+        if (!select.contains(e.target)) {
+            document.querySelector('.select-items').style.display = 'none';
+        }
+    });
+</script>

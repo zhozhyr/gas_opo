@@ -1,65 +1,22 @@
-
 body {
     margin: 0;
     padding: 0;
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
 }
 
-TABLE {
-    margin: 0;
-    width: 300px; /* Ширина таблицы */
-    border-collapse: collapse; /* Убираем двойные линии между ячейками */
-    border: 2px solid white; /* Прячем рамку вокруг таблицы */
-}
-
-TD, TH {
-    padding: 3px; /* Поля вокруг содержимого таблицы */
-    border: 1px solid #000000; /* Параметры рамки */
-    text-align: left; /* Выравнивание по левому краю */
-}
-
-.coming {
-    background-color: rgb(253, 241, 172);
-}
-
-.coming:hover {
-    background-color: #fce669;
-}
-
-.expired {
-    background-color: #ffd3d3;
-}
-
-.expired:hover {
-    background-color: #ffafaf;
-}
-
-td:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Увеличиваем прозрачность текущего цвета */
-}
-
-tr:hover {
-    background-color: rgba(3, 13, 30, 0.1); /* Увеличиваем прозрачность текущего цвета */
-}
-
-.change {
-    background-color: white;
-}
-
-.change:hover {
-    background-color: white;
-}
-
 .filter-panel {
+    width: 100%;
+    height: 80px;
     background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
+    padding: 5px 20px;
+    margin: 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    position: fixed;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 15px;
+    z-index: 1000;
 }
 
 .filter-panel label {
@@ -87,164 +44,243 @@ tr:hover {
 }
 
 .filter-panel button[type="submit"], .filter-panel button[type="button"] {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #f8f9fa;
     border: none;
     padding: 8px 15px;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: 0.2s ease;
 }
 
 .filter-panel button[type="submit"]:hover, .filter-panel button[type="button"]:hover {
-    background-color: #0056b3;
+    background-color: #f8f9fa;
+    transform: scale(1.1);
+
 }
 
-.filter-panel .search-container {
-    display: flex;
-    align-items: center;
+.filter-panel .division, #table-search-container {
+    padding: 10px;
+    margin: 0;
+    border: dashed 2px rgba(0, 0, 0, 0.38);
 }
 
-.filter-panel .search-container input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
+#table-search-container select {
+    margin-top: 5px;
+    border-radius: 1px;
+    padding: 2px;
 }
 
-.filter-panel .search-container button {
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    padding: 8px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.filter-panel .search-container button:hover {
-    background-color: #218838;
-}
-
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-}
-
-.close {
-    color: #aaa;
+.filter-panel .division button[type="submit"] {
     float: right;
-    font-size: 28px;
+    background-color: #1d2b59;
+    color: white;
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
 
-.change-buttons button {
-    margin: 5px 0;
-    padding: 10px 15px;
-    width: 100%;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-    font-family: sans-serif;
-    text-decoration: none;
+.custom-select {
     position: relative;
-    transition: all .35s;
+    display: inline-block;
+    width: 250px;
+}
+
+.select-selected {
+    background-color: #f8f9fa;
+    padding: 10px;
     cursor: pointer;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border: none;
+    transition: transform 0.2s ease;
 }
 
-.change-buttons button span {
-    position: relative;
-    z-index: 2;
-    color: #333;
+.select-selected:hover {
+    transform: scale(1.1);
 }
 
-.change-buttons button:hover {
-    color: #fff;
+.select-selected img {
+    margin: 0 8px 0 0;
 }
 
-.change-buttons button:after {
+.select-items {
     position: absolute;
-    content: "";
+    background-color: #fff;
+    border: 1px solid #ccc;
+    display: none;
+    z-index: 99;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.select-items div {
+    padding: 10px;
+    cursor: default;
+}
+
+.select-items div:hover {
+    background-color: #f1f1f1;
+}
+
+.yellow {
+    color: #fce669;
+}
+
+.red {
+    color: #ffafaf;
+}
+
+.grey {
+    color: gray;
+}
+
+.filter-panel button {
+    background-color: #f8f9fa;
+    border: none;
+    transition: transform 0.2s ease;
+}
+
+.custom_display {
+    padding-top: 85px;
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+.custom_display thead {
+    background-color: #fff;
+    position: sticky;
+    top: 90px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.custom_display TD, .custom_display TH {
+    padding: 5px;
+    box-shadow: 5px 5px 0 -4px black inset;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.custom_display .deleted {
+    background-color: rgb(131, 131, 131);
+}
+
+.custom_display .deleted:hover {
+    background-color: rgb(80, 80, 80);
+}
+
+.custom_display .coming {
+    background-color: rgb(253, 241, 172);
+}
+
+.custom_display .coming:hover {
+    background-color: #fce669;
+}
+
+.custom_display .expired {
+    background-color: #ffd3d3;
+}
+
+.custom_display .expired:hover {
+    background-color: #ffafaf;
+}
+
+.custom_display td:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.custom_display tr:hover {
+    background-color: rgba(3, 13, 30, 0.1);
+}
+
+.custom_display .change {
+    background-color: white;
+}
+
+.custom_display .change:hover {
+    background-color: white;
+}
+
+
+.change button,
+.change button:active,
+.change button:focus {
+    border: none;
+    background-color: white;
+    transition: transform 0.2s ease;
+}
+
+.filter-panel button:hover,
+.change button:hover {
+    transform: scale(1.1);
+}
+
+
+.tab-pane {
+    display: flex;
+}
+
+.left {
+    float: left;
+    width: 50%;
+}
+
+.left {
+    float: right;
+    width: 50%;
+}
+
+/* Стили для выезжающей панели */
+.filter-panel-slide {
+    position: fixed;
     top: 0;
-    left: 0;
-    width: 0;
+    right: -400px;
+    width: 300px;
     height: 100%;
-    background: #bcd29d;
-    transition: all .35s;
-    z-index: 1;
-    border-radius: 2px;
+    background-color: #f1f1f1;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease;
+    padding: 20px;
 }
 
-
-.change-buttons button:hover:after {
-    width: 100%;
+.active {
+    right: 0;
 }
 
-/* Стили для таблицы в модальном окне */
-.change_table {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    overflow: hidden;
+#filterButton {
+    position: fixed;
+
+    right: 20px;
+    background-color: #f8f9fa;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-.change_table thead {
-    display: flex;
-    flex-direction: column;
+#filterButton:hover {
+    background-color: #f8f9fa;
 }
 
-.change_table tbody {
-    display: flex;
-    flex-direction: column;
+#closeFilters {
+    background-color: #f1f1f1;
 }
 
-.change_table thead tr {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.change_table tbody tr {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.change_table th {
-    flex: 1 1 100%;
-    box-sizing: border-box;
+#applyFilters {
+    margin-top: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     padding: 10px;
-    border: 1px solid #ddd;
+    background-color: #1d2b59;
+    color: white;
+    border-radius: 8px;
 }
 
-.change_table td {
-    flex: 1 1 100%;
-    box-sizing: border-box;
+.btn_del_ed{
+    margin: 10px 0;
     padding: 10px;
-    border: 1px solid #ddd;
+    background-color: #1d2b59;
+    color: white;
+    border-radius: 8px;
 }
-

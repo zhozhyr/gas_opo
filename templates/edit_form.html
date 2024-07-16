@@ -3,24 +3,232 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Редактирование элемента</title>
+    <title>Изменить запись</title>
+    <link type="image/png" sizes="96x96" rel="icon" href="{% static 'img/icons8-инженер-96.png' %}">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h2>Редактирование элемента</h2>
-<form method="post">
-    {% csrf_token %}
-    <h3>Информация о TU</h3>
-    {{ tu_form.as_p }}
-    <h3>Информация об OPO</h3>
-    {{ opo_form.as_p }}
-    <h3>Сертификаты</h3>
-    {% for cert_form in cert_forms %}
-        {{ cert_form.as_p }}
-    {% endfor %}
-    <button type="submit">Сохранить</button>
-    <a href="{% url 'display_data' %}">Отмена</a>
-</form>
 
+<div class="container mt-5">
+    <h2>Изменить запись</h2>
+
+    {% for cert_form in cert_forms %}
+        {{ cert_form.errors }}
+    {% endfor %}
+
+
+
+    <form id="editForm" method="post" action="{% url 'edit_item' item.pk %}">
+        {% csrf_token %}
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#tab-basic">Основная информация</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-operation">Эксплуатация</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-characteristics">Характеристики</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-documentation">Документация</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <!-- Основная информация -->
+            <div id="tab-basic" class="tab-pane active">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>{{ setup_form.name.label_tag }} {{ setup_form.name }}</div>
+                        <div>{{ opo_form.txt.label_tag }} {{ opo_form.txt }}</div>
+                        <div>{{ opo_form.reg_number.label_tag }} {{ opo_form.reg_number }}</div>
+                        <div>{{ opo_form.txt_short.label_tag }} {{ opo_form.txt_short }}</div>
+
+                        <div>{{ name_form.description.label_tag }} {{ name_form.description }}</div>
+
+                        <div class="hide" style="display: none">
+                            {{ tu_form.id_opo.label_tag }} {{ tu_form.id_opo }}
+                            {{ tu_form.id_vid_tu.label_tag }} {{ tu_form.id_vid_tu }}
+                            {{ tu_form.id_naimenovanie_tu.label_tag }} {{ tu_form.id_naimenovanie_tu }}
+                            {{ tu_form.id_tu.label_tag }} {{ tu_form.id_tu }}
+
+                            {{ setup_form.short_name.label_tag }}{{ setup_form.short_name }}
+                            {{ setup_form.id_struct_parent.label_tag }}{{ setup_form.id_struct_parent }}
+
+                            {{ opo_form.id_type_opo.label_tag }} {{ opo_form.id_type_opo }}
+
+                            {{ cert_form.id_tu.label_tag }}{{ cert_form.id_tu }}
+                        </div>
+
+
+                        <div>{{ tu_form.id_classa_opasnosti.label_tag }} {{ tu_form.id_classa_opasnosti }}</div>
+
+                        <div>{{ tu_form.zavod_izgotovitel_txt.label_tag }} {{ tu_form.zavod_izgotovitel_txt }}</div>
+                        <div>{{ tu_form.zavodskoy_nomer.label_tag }} {{ tu_form.zavodskoy_nomer }}</div>
+                        <div>{{ tu_form.seriyniy_nomer_tu.label_tag }} {{ tu_form.seriyniy_nomer_tu }}</div>
+                                            </div>
+                    <div class="col-md-6">
+                        <div>{{ tu_form.gos_registracionniy_nomer.label_tag }} {{ tu_form.gos_registracionniy_nomer }}</div>
+                        <div>{{ tu_form.marka_tu.label_tag }} {{ tu_form.marka_tu }}</div>
+                        <div>{{ tu_form.kratkie_tehn_haract_tu.label_tag }} {{ tu_form.kratkie_tehn_haract_tu }}</div>
+                        <div>{{ tu_form.registr_nomer_gtt.label_tag }} {{ tu_form.registr_nomer_gtt }}</div>
+                        <div>{{ tu_form.nomer_tu_po_tehn_sheme.label_tag }} {{ tu_form.nomer_tu_po_tehn_sheme }}</div>
+                        <div>{{ tu_form.god_izgotovleniya.label_tag }} {{ tu_form.god_izgotovleniya }}</div>
+                        <div>{{ tu_form.primechanie.label_tag }}{{ tu_form.primechanie }}</div>
+                        <div>{{ tu_form.primechanie2.label_tag }}{{ tu_form.primechanie2 }}</div>
+                        <div>{{ tu_form.primechanie3.label_tag }}{{ tu_form.primechanie3 }}</div>
+                        <div>{{ tu_form.isdeleted.label_tag }} {{ tu_form.isdeleted }}</div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- Эксплуатация -->
+            <div id="tab-operation" class="tab-pane">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>{{ tu_form.norm_srok_ekspluat_let.label_tag }} {{ tu_form.norm_srok_ekspluat_let }}</div>
+                        <div>{{ tu_form.god_vvoda_v_ekspluat.label_tag }} {{ tu_form.god_vvoda_v_ekspluat }}</div>
+                        <div>{{ tu_form.god_okonchaniya_ekspluat.label_tag }} {{ tu_form.god_okonchaniya_ekspluat }}</div>
+                        <div>{{ tu_form.procent_iznosa.label_tag }} {{ tu_form.procent_iznosa }}</div>
+                        <div>{{ tu_form.data_posl_epb.label_tag }} {{ tu_form.data_posl_epb }}</div>
+                        <div>{{ tu_form.data_sled_epb.label_tag }} {{ tu_form.data_sled_epb }}</div>
+                        <div>{{ tu_form.data_ocherednoy_proverki.label_tag }} {{ tu_form.data_ocherednoy_proverki }}</div>
+                        <div>{{ tu_form.data_sled_proverki.label_tag }} {{ tu_form.data_sled_proverki }}</div>
+                        <div>{{ tu_form.razresh_srok_ekspluat.label_tag }} {{ tu_form.razresh_srok_ekspluat }}</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Характеристики -->
+            <div id="tab-characteristics" class="tab-pane">
+
+
+                <div>
+                    {{ tu_form.nalichie_predohr_ustroystva.label_tag }}
+                    {{ tu_form.nalichie_predohr_ustroystva }}
+                </div>
+                <div>
+                    {{ tu_form.tip_predohr_ustr.label_tag }}
+                    {{ tu_form.tip_predohr_ustr }}
+                </div>
+                <div class="left">
+                    <h5>Объекты использования, переработки, образования, хранения, транспортировки, уничтожения
+                        опасных
+                        веществ:</h5>
+                    <div>
+                        {{ tu_form.obyom_m3.label_tag }}
+                        {{ tu_form.obyom_m3 }}
+                    </div>
+                    <div>
+                        {{ tu_form.object_davlenie_mpa.label_tag }}
+                        {{ tu_form.object_davlenie_mpa }}
+                    </div>
+                    <div>
+                        {{ tu_form.dy_mm.label_tag }}
+                        {{ tu_form.dy_mm }}
+                    </div>
+                    <h5>Оборудование, работающее при избыточном давлении > 0,07 МПа или температуре > 115 оС:</h5>
+                    <div>
+                        {{ tu_form.oborudovanie_davlenie_mpa.label_tag }}
+                        {{ tu_form.oborudovanie_davlenie_mpa }}
+                    </div>
+                    <div>
+                        {{ tu_form.obyom_t.label_tag }}
+                        {{ tu_form.obyom_t }}
+                    </div>
+                </div>
+                <div class="right">
+                    <h5>Сведения о модернизации:</h5>
+                    <div>
+                        {{ tu_form.god_modernizacii.label_tag }}
+                        {{ tu_form.god_modernizacii }}
+                    </div>
+                    <div>
+                        {{ tu_form.provedennie_meropriyatiya.label_tag }}
+                        {{ tu_form.provedennie_meropriyatiya }}
+                    </div>
+                    <h5>Грузоподъемные сооружения:</h5>
+                    <div>
+                        {{ tu_form.tip.label_tag }}
+                        {{ tu_form.tip }}
+                    </div>
+                    <div>
+                        {{ tu_form.podtip.label_tag }}
+                        {{ tu_form.podtip }}
+                    </div>
+                    <div>
+                        {{ tu_form.gruzopodyomnost_t.label_tag }}
+                        {{ tu_form.gruzopodyomnost_t }}
+                    </div>
+                </div>
+            </div>
+        
+        <!-- Документация -->
+        <div id="tab-documentation" class="tab-pane">
+            <div>
+                <div>{{ tu_form.nomer_razresheniya_rtn.label_tag }} {{ tu_form.nomer_razresheniya_rtn }}</div>
+                <div>{{ tu_form.nomer_zaklyucheniya_epb.label_tag }} {{ tu_form.nomer_zaklyucheniya_epb }}</div>
+                <div>{{ tu_form.nalichie_pasporta_tu.label_tag }} {{ tu_form.nalichie_pasporta_tu }}</div>
+                <div>{{ tu_form.inf_tu_svedeniya_opo.label_tag }} {{ tu_form.inf_tu_svedeniya_opo }}</div>
+                <div>{{ tu_form.inf_tu_rtn.label_tag }} {{ tu_form.inf_tu_rtn }}</div>
+                <div>{{ tu_form.nalichie_sertificata_sootvetstviya.label_tag }} {{ tu_form.nalichie_sertificata_sootvetstviya }}</div>
+                <div>{{ tu_form.nalichie_sertificata_rtn.label_tag }} {{ tu_form.nalichie_sertificata_rtn }}</div>
+                
+                <div>{{ tu_form.cb_oncontrol.label_tag }} {{ tu_form.cb_oncontrol }}</div>
+            
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>{{ cert_forms.0.type.label_tag }}</th>
+                        <th>{{ cert_forms.0.number.label_tag }}</th>
+                        <th>{{ cert_forms.0.expiration_date.label_tag }}</th>
+                        <th>{{ cert_forms.0.issued_by.label_tag }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for cert_form in cert_forms %}
+                        <tr>
+                            <td>{{ cert_form.type }}</td>
+                            <td>{{ cert_form.number }}</td>
+                            <td>{{ cert_form.expiration_date }}</td>
+                            <td>{{ cert_form.issued_by }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                {#<!-- Для отладки -->#}
+                {#<ul>#}
+                {#    {% for cert_form in cert_forms %}#}
+                {#        <li>{{ cert_form }}</li>#}
+                {#    {% endfor %}#}
+                {#</ul>#}
+                {#<div>#}
+                {#    <h2>Данные контекста</h2>#}
+                {#    <pre>#}
+                {#        TU Form: {{ tu_form }}#}
+                {#        OPO Form: {{ opo_form }}#}
+                {#        Cert Forms:#}
+                {#        {% for cert_form in cert_forms %}#}
+                {#            {{ cert_form }}#}
+                {#        {% endfor %}#}
+                {#        Name Form: {{ name_form }}#}
+                {#        Setup Form: {{ setup_form }}#}
+                {#        Item: {{ item }}#}
+                {#    </pre>#}
+                {#</div>#}
+
+            </div>
+        </div>
+</div>
+<button class="btn_del_ed" type="submit">Сохранить</button>
+</form>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,17 +1,16 @@
 from django import forms
-from .models import Report_view, OPO, TU, Certificate
+from .models import Report_view, OPO, TU, Certificate, NameTU, Setup
 
 
 class FilterForm(forms.Form):
-    # Получаем список уникальных значений поля 'naimenovanie_strukturnogo_podrazdeleniya'
     choices_list = Report_view.objects.values_list('naimenovanie_strukturnogo_podrazdeleniya',
                                                    flat=True).distinct().order_by(
         'naimenovanie_strukturnogo_podrazdeleniya')
-    # Преобразуем в список кортежей для ChoiceField
+
     choices = [(choice, choice) for choice in choices_list]
 
     naimenovanie_strukturnogo_podrazdeleniya = forms.ChoiceField(
-        choices=[('', 'Выберите подразделение')] + choices,
+        choices=[('', 'Все')] + choices,
         label='Подразделение',
         required=False
     )
@@ -20,93 +19,102 @@ class FilterForm(forms.Form):
 
 
 class ReportViewForm(forms.ModelForm):
-    naimenovanie_tipa_opo = forms.CharField(max_length=255, label='Наименование типа ОПО')
-    registracionniy_nomer_opo = forms.CharField(max_length=255, label='Регистрационный номер ОПО')
-    naimenovanie_strukturnogo_podrazdeleniya = forms.CharField(max_length=255,
-                                                               label='Наименование структурного подразделения')
-    kratkoe_naimenovanie_tipa_opo = forms.CharField(max_length=255, label='Краткое наименование типа ОПО')
-
-    certificate_type = forms.CharField(widget=forms.Textarea, label='Тип сертификата')
-    certificate_number = forms.CharField(widget=forms.Textarea, label='Номер сертификата')
-    certificate_expiration_date = forms.CharField(widget=forms.Textarea, label='Дата истечения сертификата')
-
     class Meta:
         model = TU
-        fields = [
-            'naimenovanie_tipa_opo',
-            'registracionniy_nomer_opo',
-            'naimenovanie_strukturnogo_podrazdeleniya',
-            'kratkoe_naimenovanie_tipa_opo',
-            'registr_nomer_oborudovaniya_tu',
-            'seriyniy_nomer_tu',
-            'gos_registracionniy_nomer',
-            'zavodskoy_nomer',
-            'marka_tu',
-            'kratkie_tehn_haract_tu',
-            'registr_nomer_gtt',
-            'nomer_tu_po_tehn_sheme',
-            'god_izgotovleniya',
-            'norm_srok_ekspluat_let',
-            'god_vvoda_v_ekspluat',
-            'god_okonchaniya_ekspluat',
-            'procent_iznosa',
-            'data_posl_epb',
-            'data_sled_epb',
-            'data_ocherednoy_proverki',
-            'data_sled_proverki',
-            'razresh_srok_ekspluat',
-            'nalichie_predohr_ustroystva',
-            'tip_predohr_ustr',
-            'obyom_m3',
-            'object_davlenie_mpa',
-            'dy_mm',
-            'tip',
-            'podtip',
-            'gruzopodyomnost_t',
-            'obyom_t',
-            'oborudovanie_davlenie_mpa',
-            'god_modernizacii',
-            'provedennie_meropriyatiya',
-            'nomer_razresheniya_rtn',
-            'nomer_zaklyucheniya_epb',
-            'nalichie_pasporta_tu',
-            'inf_tu_svedeniya_opo',
-            'inf_tu_rtn',
-            'nalichie_sertificata_sootvetstviya',
-            'nalichie_sertificata_rtn',
-            'primechanie',
-            'id_opo',
-            'id_classa_opasnosti',
-            'id_zavod_izgotovitel',
-            'id_vid_tu',
-            'id_tip_tu',
-            'id_naimenovanie_tu',
-            'id_tu',
-            'id_rtn',
-            'strana_proizvoditel',
-            'vivod_epb',
-            'kol_ciklov',
-            'kol_ciklov_fact',
-            'id_nalichie_sr_kontr',
-            'id_tu_zamen',
-            'nn_tu_zamen',
-            'id_vid_tu_j',
-            'id_tip_tu_j',
-            'cb_oncontrol',
-            'primechanie2',
-            'primechanie3',
-            'zavod_izgotovitel_txt',
-            'date_upd',
-            'login_upd',
-            'isdeleted',
-        ]
+        exclude = []
+        labels = {
+            'id_classa_opasnosti': 'Класс опасности',
+            'zavod_izgotovitel_txt': 'Завод-изготовитель',
+            'zavodskoy_nomer': 'Заводской номер',
+            'seriyniy_nomer_tu': 'Серийный номер ТУ',
+            'gos_registracionniy_nomer': 'Государственный регистрационный знак',
+            'marka_tu': 'Марка ТУ',
+            'kratkie_tehn_haract_tu': 'Краткие тех.характеристики',
+            'registr_nomer_gtt': 'Регистрационный номер ГГТ',
+            'nomer_tu_po_tehn_sheme': 'Номер по тех.схеме',
+            'god_izgotovleniya': 'Год изготовления',
+            'primechanie': 'Примечание',
+            'primechanie2': 'Примечание №2',
+            'primechanie3': 'Примечание №3',
+
+            'norm_srok_ekspluat_let': 'Нормативный срок эксплуатации, лет',
+            'god_vvoda_v_ekspluat': 'Год ввода в эксплуатацию',
+            'god_okonchaniya_ekspluat': 'Год окончания срока эксплуатации',
+            'procent_iznosa': 'Процент износа',
+            'data_posl_epb': 'Дата проведения ЭПБ',
+            'data_sled_epb': 'Дата следующей ЭПБ',
+            'data_ocherednoy_proverki': 'Дата очередной проверки (технического освидетельствования)',
+            'data_sled_proverki': 'Дата следующей проверки (технического освидетельствования)',
+            'razresh_srok_ekspluat': 'Разрешенный срок эксплуатации, лет',
+
+            'nalichie_predohr_ustroystva': 'Предохранительное устройство',
+            'tip_predohr_ustr': 'Тип предохранительного устройства',
+            'obyom_m3': 'Объём, м3',
+            'object_davlenie_mpa': 'Давление, МПа',
+            'dy_mm': 'Dy, MM',
+            'oborudovanie_davlenie_mpa': 'Давление, МПа',
+            'obyom_t': 'Объём, м3',
+            'god_modernizacii': 'Год модернизации',
+            'provedennie_meropriyatiya': 'Проведенные мероприятия',
+            'tip': 'Тип',
+            'podtip': 'Подтип',
+            'gruzopodyomnost_t': 'Грузоподъемность, т',
+
+            'nomer_razresheniya_rtn': 'Номер разрешения РТН',
+            'nomer_zaklyucheniya_epb': 'Номер заключения ЭПБ',
+            'nalichie_pasporta_tu': 'Паспорт ТУ',
+            'inf_tu_svedeniya_opo': 'Информация о включении ТУ в Сведения, характеризующие ОПО',
+            'inf_tu_rtn': 'Информация о вкючении ТУ в отчет PTН',
+            'nalichie_sertificata_sootvetstviya': 'Сертификат (декларация)соответствия',
+            'nalichie_sertificata_rtn': 'Разрешение РТН на применение',
+            'certificate_type': 'Тип сертификата',
+            'certificate_number': '№',
+            'certificate_expiration_date': 'Дата сертификата',
+            'issued_by': 'Кем выдан',
+
+        }
+
+    naimenovanie_strukturnogo_podrazdeleniya = forms.CharField(max_length=255, label='Cтруктурное подразделение')
+    naimenovanie_tipa_opo = forms.CharField(max_length=255, label='ОПО')
+    registracionniy_nomer_opo = forms.CharField(max_length=255, label='Регистрационный номер ОПО')
+    kratkoe_naimenovanie_tipa_opo = forms.CharField(max_length=255, label='Краткое наименование ОПО')
+    naimenovanie_tu = forms.CharField(max_length=255, label='Наименование ТУ')
+
+    certificate_type = forms.CharField(label='Тип сертификата')
+    certificate_number = forms.CharField(label='Номер сертификата')
+    issued_by = forms.CharField(label='Кем выдан')
+    certificate_expiration_date = forms.CharField(label='Дата сертификата')
+
+    def save(self, commit=True):
+        report_view_instance = super().save(commit=False)
+        report_view_instance.naimenovanie_strukturnogo_podrazdeleniya = self.cleaned_data[
+            'naimenovanie_strukturnogo_podrazdeleniya']
+        report_view_instance.naimenovanie_tipa_opo = self.cleaned_data['naimenovanie_tipa_opo']
+        report_view_instance.registracionniy_nomer_opo = self.cleaned_data['registracionniy_nomer_opo']
+        report_view_instance.kratkoe_naimenovanie_tipa_opo = self.cleaned_data['kratkoe_naimenovanie_tipa_opo']
+        report_view_instance.naimenovanie_tu = self.cleaned_data['naimenovanie_tu']
+
+        if commit:
+            report_view_instance.save()
+
+        return report_view_instance
+
+
+class DeleteConfirmForm(forms.Form):
+    confirm = forms.BooleanField(label='Подтвердите удаление', required=True)
+
+
+class TUForm(forms.ModelForm):
+    class Meta:
+        model = TU
+        fields = '__all__'
         labels = {
             'registr_nomer_oborudovaniya_tu': 'Регистрационный номер оборудования ТУ',
             'seriyniy_nomer_tu': 'Серийный номер ТУ',
-            'gos_registracionniy_nomer': 'Государственный регистрационный номер',
+            'gos_registracionniy_nomer': 'Гос. регистрационный знак',
             'zavodskoy_nomer': 'Заводской номер',
             'marka_tu': 'Марка ТУ',
-            'kratkie_tehn_haract_tu': 'Краткие технические характеристики ТУ',
+            'kratkie_tehn_haract_tu': 'Краткие тех. характеристики ТУ',
             'registr_nomer_gtt': 'Регистрационный номер ГТТ',
             'nomer_tu_po_tehn_sheme': 'Номер ТУ по технической схеме',
             'god_izgotovleniya': 'Год изготовления',
@@ -121,14 +129,18 @@ class ReportViewForm(forms.ModelForm):
             'razresh_srok_ekspluat': 'Разрешенный срок эксплуатации (лет)',
             'nalichie_predohr_ustroystva': 'Наличие предохранительного устройства',
             'tip_predohr_ustr': 'Тип предохранительного устройства',
-            'obyom_m3': 'Объем, м³',
-            'object_davlenie_mpa': 'Давление на объекте, МПа',
-            'dy_mm': 'Диаметр трубы, мм',
+
+            'obyom_m3': 'Объём, м3',
+            'object_davlenie_mpa': 'Давление, МПа',
+            'dy_mm': 'Dy, MM',
+            'oborudovanie_davlenie_mpa': 'Давление, МПа',
+            'obyom_t': 'Объём, м3',
+            'god_modernizacii': 'Год модернизации',
+            'provedennie_meropriyatiya': 'Проведенные мероприятия',
             'tip': 'Тип',
             'podtip': 'Подтип',
             'gruzopodyomnost_t': 'Грузоподъемность, т',
-            'obyom_t': 'Объем, т',
-            'oborudovanie_davlenie_mpa': 'Давление оборудования, МПа',
+
             'god_modernizacii': 'Год модернизации',
             'provedennie_meropriyatiya': 'Проведенные мероприятия',
             'nomer_razresheniya_rtn': 'Номер разрешения РТН',
@@ -166,23 +178,48 @@ class ReportViewForm(forms.ModelForm):
         }
 
 
-class DeleteConfirmForm(forms.Form):
-    confirm = forms.BooleanField(label='Подтвердите удаление', required=True)
-
-
-class TUForm(forms.ModelForm):
-    class Meta:
-        model = TU
-        fields = '__all__'
-
-
 class OPOForm(forms.ModelForm):
     class Meta:
         model = OPO
         fields = '__all__'
+        labels = {
+            'txt': 'Наименование типа ОПО',
+            'reg_number': 'Регистрационный номер ОПО',
+            'id_strukturn_podrazd': 'Структурное подразделение ID',
+            'txt_short': 'Краткое наименование типа ОПО',
+
+        }
 
 
 class CertificateForm(forms.ModelForm):
     class Meta:
         model = Certificate
         fields = '__all__'
+
+        labels = {
+            'type': 'Тип сертификата',
+            'number': 'Номер сертификата',
+            'expiration_date': 'Дата истечения сертификата',
+            'issued_by': 'Кем выдан'
+        }
+
+
+class NameTuForm(forms.ModelForm):
+    class Meta:
+        model = NameTU
+        fields = '__all__'
+
+        labels = {
+            'id': 'ID Наименования ТУ',
+            'description': 'Наименование ТУ',
+        }
+
+
+class SetupForm(forms.ModelForm):
+    class Meta:
+        model = Setup
+        fields = '__all__'
+
+        labels = {
+            'name': 'Структурное подразделение',
+        }

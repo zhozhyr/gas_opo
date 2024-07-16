@@ -1,108 +1,166 @@
 <!-- Если есть данные в queryset, отобразить их -->
+{% load static %}
 {% if queryset %}
-    <table id="dataTable">
+    <table id="dataTable" class="custom_display">
         <thead>
         <tr>
-            <th class="change"></th>
-            <th>Наименование структурного подразделения</th>
-            <th>Наименование типа ОПО</th>
-            <th>Регистрационный номер ОПО</th>
-            <th>Наименование класса опасности</th>
-            <th>Краткое наименование типа ОПО</th>
-            <th>Наименование ТУ</th>
-            <th>Наименование завода</th>
-            <th>ID структурного подразделения</th>
-            <th>ID типа ОПО</th>
-            <th>ID ОПО</th>
-            <th>Наименование типа ТУ</th>
-            <th>ID типа ТУ</th>
-            <th>ID вида ТУ</th>
-            <th>Наименование вида ТУ</th>
-            <th>ID ТУ</th>
-            <th>Регистрационный номер оборудования ТУ</th>
-            <th>Серийный номер ТУ</th>
-            <th>Государственный регистрационный номер</th>
-            <th>Заводской номер</th>
-            <th>Марка ТУ</th>
-            <th>Краткие технические характеристики ТУ</th>
-            <th>Регистрационный номер ГТТ</th>
-            <th>Номер ТУ по технологической схеме</th>
-            <th>Год изготовления</th>
-            <th>Нормативный срок эксплуатации, лет</th>
-            <th>Год ввода в эксплуатацию</th>
-            <th>Год окончания эксплуатации</th>
-            <th>Процент износа</th>
+            <th rowspan="2" class="change"></th>
+            <th rowspan="2">Сист. код</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Структурное подразделение</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Наименование ОПО</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Регистрационный номер ОПО</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Класс опасности</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Сокращенное наименование ОПО</th>
 
-            <th>Дата последнего ЭПБ</th>
-            <th>Дата следующего ЭПБ</th>
-            <th>Дата очередной проверки</th>
-            <th>Дата следующей проверки</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Регистрационный (учетный) номер оборудования
+                ТУ
+            </th>
 
-            <th>Разрешенный срок эксплуатации</th>
-            <th>Наличие предохранительного устройства</th>
-            <th>Тип предохранительного устройства</th>
-            <th>Объем, м3</th>
-            <th>Объект давление, МПа</th>
-            <th>Диаметр, мм</th>
-            <th>Тип</th>
-            <th>Подтип</th>
-            <th>Грузоподъемность, т</th>
-            <th>Объем, т</th>
-            <th>Давление оборудования, МПа</th>
-            <th>Год модернизации</th>
-            <th>Проведенные мероприятия</th>
-            <th>Номер разрешения РТН</th>
-            <th>Номер заключения ЭПБ</th>
-            <th>Наличие паспорта ТУ</th>
-            <th>Информация ТУ (сведения ОПО)</th>
-            <th>Информация ТУ (РТН)</th>
-            <th>Наличие сертификата соответствия</th>
-            <th>Наличие сертификата РТН</th>
-            <th>cb_onControl</th>
-            <th>Тип сертификата</th>
-            <th>Номер сертификата</th>
-            <th>Срок действия сертификата</th>
-            <th>Орган, выдавший сертификат</th>
-            <th>Примечание</th>
-            <th>Примечание 2</th>
-            <th>Примечание 3</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Наименование ТУ</th>
 
-            <th>Дата обновления</th>
-            <th>Логин обновившего</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Серийный номер ТУ</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Государственный регистрационный знак</th>
 
-            <th>Срок окончания эксплуатации</th>
-            <th>Выведено из эксплуатации</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Завод-изготовитель</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Заводской номер ТУ</th>
+
+            {#            <th>ID структурного подразделения</th>#}
+            {#            <th>ID типа ОПО</th>#}
+            {#            <th>ID ОПО</th>#}
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Наименование типа ТУ</th>
+            {#            <th>ID типа ТУ</th>#}
+            {#            <th>ID вида ТУ</th>#}
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Наименование вида ТУ</th>
+
+
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Марка ТУ</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Краткие технические характеристики ТУ</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Регистрационный (инвентарный) номер ГТТ</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Номер ТУ по технологической схеме</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Год изготовления</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Нормативный срок эксплуатации, лет</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Год ввода в эксплуатацию</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Год окончания эксплуатации</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Процент износа</th>
+
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Дата проведения экспертизы промышленной
+                безопасности
+            </th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Дата следующей экспертизы промышленной
+                безопасности
+            </th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Дата очередной проверки (технического
+                освидетельствования)
+            </th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Дата следующей проверки (технического
+                освидетельствования)
+            </th>
+
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Разрешенный срок эксплуатации</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Наличие предохранительного устройства</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Тип предохранительного устройства</th>
+
+            <th colspan="3" style="background-color: rgba(255,166,0,0.36)">Объекты использования, переработки,
+                образования, хранения, транспортировки, уничтожения
+                опасных веществ
+            </th>
+
+            <th colspan="3" style="background-color: rgba(255,166,0,0.36)">Грузоподъемные сооружения
+            </th>
+            <th colspan="2" style="background-color: rgba(255,166,0,0.36)">Оборудование, работающее при избыточном
+                давлении >0,07 МПа или при температуре >115 0С
+            </th>
+            <th colspan="2" style="background-color: rgba(255,166,0,0.36)">Сведения о модернизации
+            </th>
+
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Тип сертификата</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Номер сертификата</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Дата сертификата</th>
+            <th rowspan="2" style="background-color: rgba(255,166,0,0.36)">Кем выдан сертификат</th>
+
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Номер разрешения РТН</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Номер заключения ЭПБ</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Наличие паспорта ТУ (есть/нет)</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Информация о включении ТУ в Сведения,
+                характеризующие ОПО
+            </th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Информация о включении ТУ в отчет РТН</th>
+
+
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Наличие сертификата (декларации)
+                соответствия
+            </th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Наличие разрешения РТН на применение</th>
+
+
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Примечание</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Примечание 2</th>
+            <th rowspan="2" style="background-color: rgba(172,168,246,0.7)">Примечание 3</th>
+
+            <th rowspan="2">Дата изменения</th>
+            <th rowspan="2">Внес изменения</th>
+
+            <th rowspan="2">Срок окончания эксплуатации</th>
+            <th rowspan="2">Выведено из эксплуатации</th>
         </tr>
+        <tr>
+
+            <th style="background-color: rgba(255,166,0,0.36)">Объем, м<sup>3</sup></th>
+            <th style="background-color: rgba(255,166,0,0.36)">Давление, МПа</th>
+            <th style="background-color: rgba(255,166,0,0.36)">Dy, мм</th>
+            <th style="background-color: rgba(255,166,0,0.36)">Тип</th>
+            <th style="background-color: rgba(255,166,0,0.36)">Подтип</th>
+            <th style="background-color: rgba(255,166,0,0.36)">Грузоподъемность, т</th>
+            <th style="background-color: rgba(255,166,0,0.36)">Объем, т</th>
+            <th style="background-color: rgba(255,166,0,0.36)">Давление оборудования, МПа</th>
+            <th style="background-color: rgba(255,166,0,0.36)">Год модернизации</th>
+            <th style="background-color: rgba(255,166,0,0.36)">Проведенные мероприятия</th>
+
+        </tr>
+
         </thead>
         <tbody>
-        {% for item in queryset %}
-            <tr class="{% if item.god_okonchaniya_ekspluat and item.god_okonchaniya_ekspluat <= current_year %}expired{% elif item.god_okonchaniya_ekspluat > current_year_plus_2 %}coming{% endif %}">
-                <td class="change">
-                    <a href="{% url 'edit_item' item.pk %}"><button type="button">Изменить</button></a>
-                    <a href="{% url 'delete_item' item.pk %}">Удалить</a>
-                </td>
 
+
+        {% for item in queryset %}
+            <tr class="{% if item.isdel == 'Да' %}deleted{% elif item.god_okonchaniya_ekspluat and item.god_okonchaniya_ekspluat <= current_year %}expired{% elif item.god_okonchaniya_ekspluat > current_year_plus_2 %}coming{% endif %}">
+                <td class="change">
+                    <button type="button"
+                            onclick="openEditWindow('{% url 'edit_item' item.pk %}')">
+                        <img src="{% static 'img/setting.svg' %}" alt="">
+                    </button>
+                    <button type="button"
+                            onclick="openDeleteWindow('{% url 'delete_item' item.pk %}')">
+                        <img src="{% static 'img/slash.svg' %}" alt="">
+
+                    </button>
+                </td>
+                <td>{% if item.ID_TU %}{{ item.ID_TU }}{% endif %}</td>
                 <td>{% if item.naimenovanie_strukturnogo_podrazdeleniya %}
                     {{ item.naimenovanie_strukturnogo_podrazdeleniya }}{% endif %}</td>
                 <td>{% if item.naimenovanie_tipa_opo %}{{ item.naimenovanie_tipa_opo }}{% endif %}</td>
                 <td>{% if item.registracionniy_nomer_opo %}{{ item.registracionniy_nomer_opo }}{% endif %}</td>
                 <td>{% if item.naimenovanie_classa_opasnosti %}{{ item.naimenovanie_classa_opasnosti }}{% endif %}</td>
                 <td>{% if item.kratkoe_naimenovanie_tipa_opo %}{{ item.kratkoe_naimenovanie_tipa_opo }}{% endif %}</td>
-                <td>{% if item.naimenovanie_tu %}{{ item.naimenovanie_tu }}{% endif %}</td>
-                <td>{% if item.naimenovanie_zavoda %}{{ item.naimenovanie_zavoda }}{% endif %}</td>
-                <td>{% if item.id_strukturn_podrazd %}{{ item.id_strukturn_podrazd }}{% endif %}</td>
-                <td>{% if item.id_tipa_opo %}{{ item.id_tipa_opo }}{% endif %}</td>
-                <td>{% if item.id_opo %}{{ item.id_opo }}{% endif %}</td>
-                <td>{% if item.naimenovanie_tipa_tu %}{{ item.naimenovanie_tipa_tu }}{% endif %}</td>
-                <td>{% if item.id_type_tu %}{{ item.id_type_tu }}{% endif %}</td>
-                <td>{% if item.id_kind_tu %}{{ item.id_kind_tu }}{% endif %}</td>
-                <td>{% if item.naimenovanie_vida_tu %}{{ item.naimenovanie_vida_tu }}{% endif %}</td>
-                <td>{% if item.ID_TU %}{{ item.ID_TU }}{% endif %}</td>
                 <td>{% if item.registr_nomer_oborudovaniya_tu %}
                     {{ item.registr_nomer_oborudovaniya_tu }}{% endif %}</td>
+
+                <td>{% if item.naimenovanie_tu %}{{ item.naimenovanie_tu }}{% endif %}</td>
                 <td>{% if item.seriyniy_nomer_tu %}{{ item.seriyniy_nomer_tu }}{% endif %}</td>
                 <td>{% if item.gos_registracionniy_nomer %}{{ item.gos_registracionniy_nomer }}{% endif %}</td>
+
+                <td>{% if item.naimenovanie_zavoda %}{{ item.naimenovanie_zavoda }}{% endif %}</td>
                 <td>{% if item.zavodskoy_nomer %}{{ item.zavodskoy_nomer }}{% endif %}</td>
+
+                {#                <td>{% if item.id_strukturn_podrazd %}{{ item.id_strukturn_podrazd }}{% endif %}</td>#}
+                {#                <td>{% if item.id_tipa_opo %}{{ item.id_tipa_opo }}{% endif %}</td>#}
+                {#                <td>{% if item.id_opo %}{{ item.id_opo }}{% endif %}</td>#}
+                <td>{% if item.naimenovanie_tipa_tu %}{{ item.naimenovanie_tipa_tu }}{% endif %}</td>
+                {#                <td>{% if item.id_type_tu %}{{ item.id_type_tu }}{% endif %}</td>#}
+                {#                <td>{% if item.id_kind_tu %}{{ item.id_kind_tu }}{% endif %}</td>#}
+                <td>{% if item.naimenovanie_vida_tu %}{{ item.naimenovanie_vida_tu }}{% endif %}</td>
+
+
                 <td>{% if item.marka_tu %}{{ item.marka_tu }}{% endif %}</td>
                 <td>{% if item.kratkie_tehn_haract_tu %}{{ item.kratkie_tehn_haract_tu }}{% endif %}</td>
                 <td>{% if item.registr_nomer_gtt %}{{ item.registr_nomer_gtt }}{% endif %}</td>
@@ -131,20 +189,26 @@
                 <td>{% if item.oborudovanie_davlenie_mpa %}{{ item.oborudovanie_davlenie_mpa }}{% endif %}</td>
                 <td>{% if item.god_modernizacii %}{{ item.god_modernizacii }}{% endif %}</td>
                 <td>{% if item.provedennie_meropriyatiya %}{{ item.provedennie_meropriyatiya }}{% endif %}</td>
+
+                <td>{% if item.certificate_type %}{{ item.certificate_type }}{% endif %}</td>
+                <td>{% if item.certificate_number %}{{ item.certificate_number }}{% endif %}</td>
+                <td>{% if item.certificate_expiration_date %}{{ item.certificate_expiration_date }}{% endif %}</td>
+                <td>{% if item.certificate_issued_by %}{{ item.certificate_issued_by }}{% endif %}</td>
+
                 <td>{% if item.nomer_razresheniya_rtn %}{{ item.nomer_razresheniya_rtn }}{% endif %}</td>
                 <td>{% if item.nomer_zaklyucheniya_epb %}{{ item.nomer_zaklyucheniya_epb }}{% endif %}</td>
                 <td>{% if item.nalichie_pasporta_tu %}{{ item.nalichie_pasporta_tu }}{% endif %}</td>
                 <td>{% if item.inf_tu_svedeniya_opo %}{{ item.inf_tu_svedeniya_opo }}{% endif %}</td>
                 <td>{% if item.inf_tu_rtn %}{{ item.inf_tu_rtn }}{% endif %}</td>
+
+                {#                <td>{% if item.cb_onControl %}{{ item.cb_onControl }}{% endif %}</td>#}
                 <td>{% if item.nalichie_sertificata_sootvetstviya %}
                     {{ item.nalichie_sertificata_sootvetstviya }}{% endif %}</td>
                 <td>{% if item.nalichie_sertificata_rtn %}{{ item.nalichie_sertificata_rtn }}{% endif %}</td>
-                <td>{% if item.primechanie %}{{ item.cb_onControl }}{% endif %}</td>
-                <td>{% if item.certificate_type %}{{ item.certificate_type }}{% endif %}</td>
-                <td>{% if item.certificate_number %}{{ item.certificate_number }}{% endif %}</td>
-                <td>{% if item.certificate_expiration_date %}{{ item.certificate_expiration_date }}{% endif %}</td>
-                <td>{% if item.certificate_issued_by %}{{ item.certificate_issued_by }}{% endif %}</td>
-                <td>{% if item.cb_onControl %}{{ item.primechanie }}{% endif %}</td>
+
+
+                <td>{% if item.primechanie %}{{ item.primechanie }}{% endif %}</td>
+
                 <td>{% if item.Primechanie2 %}{{ item.Primechanie2 }}{% endif %}</td>
                 <td>{% if item.Primechanie3 %}{{ item.Primechanie3 }}{% endif %}</td>
 
@@ -158,4 +222,24 @@
         </tbody>
     </table>
 {% endif %}
+<script>
+    var screenWidth = window.screen.width;
+    var screenHeight = window.screen.height;
+
+    var left = (screenWidth / 2) - (800 / 2);
+    var top = (screenHeight / 2) - (600 / 2);
+    function openEditWindow(url) {
+        window.open(url, 'editWindow', 'left=' + left + ', top=' + top + ', width=1000,height=600');
+    }
+
+    function openDeleteWindow(url) {
+        window.open(url, 'deleteWindow', 'left=' + left + ', top=' + top + ', width=400,height=200');
+    }
+
+    function openCreateWindow(url) {
+        window.open(url, 'createWindow', 'left=' + left + ', top=' + top + ', width=1000,height=600');
+    }
+</script>
+
+
 
